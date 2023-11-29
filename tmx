@@ -1,0 +1,38 @@
+#!/bin/sh
+
+set -e
+
+SESSION_NAME='sudoku'
+
+if tmux has-SESSION_NAME -t=${SESSION_NAME} 2>/dev/null; then
+	tmux attach -t $SESSION_NAME
+	exit
+fi
+
+# start new session with first window 'nvim'
+tmux new-session -s $SESSION_NAME -n nvim -d
+
+# nvim (1)
+tmux send-keys -t ${SESSION_NAME} 'source .venv/bin/activate' C-m
+tmux send-keys -t ${SESSION_NAME} 'nvim .' C-m
+tmux split-window -h -l 30% -t ${SESSION_NAME}
+tmux send-keys -t ${SESSION_NAME} 'source .venv/bin/activate' C-m
+tmux send-keys -t ${SESSION_NAME} 'clear' C-m
+tmux split-window -l 25% -t ${SESSION_NAME}
+tmux send-keys -t ${SESSION_NAME} 'source .venv/bin/activate' C-m
+tmux send-keys -t ${SESSION_NAME} 'clear' C-m
+
+# console (2)
+tmux new-window -n console -t ${SESSION_NAME}
+tmux send-keys -t ${SESSION_NAME} 'source .venv/bin/activate' C-m
+tmux send-keys -t ${SESSION_NAME} 'clear' C-m
+
+# lazygit (3)
+tmux new-window -n lazygit -t ${SESSION_NAME}:3
+tmux send-keys -t ${SESSION_NAME}:3 'lazygit' C-m
+
+# Start out on the first window when we attach
+tmux select-window -t ${SESSION_NAME}:1
+tmux select-pane -t %0
+
+tmux attach -t ${SESSION_NAME}

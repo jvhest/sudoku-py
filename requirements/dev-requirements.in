@@ -1,0 +1,11 @@
+ipython
+pytest
+pytest-cov
+coverage
+black
+flake8
+isort
+mypy
+pre-commit
+pre-commit-hooks
+pyupgrade

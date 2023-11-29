@@ -1,0 +1,81 @@
+#########################
+# Project config
+#########################
+
+[project]
+name = "sudoku"
+version = "0.0.1"
+description = "Sudoku puzzle"
+authors = [
+  { name = "Jan van Hest", email = "jan.vanhest@gmail.com" }
+]
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "MIT license" }
+requires-python = ">=3.11"
+dependencies = [
+  "pygame",
+  "requests",
+  "types-requests",
+  "bs4",
+  "html5lib"
+]
+
+[project.urls]
+Repository = "https://github.com/jvhest/sudoku"
+
+[project.scripts]
+sudoku = "sudoku.sudoku:main"
+get-sudoku = "sudoku.get_sudoku:main"
+
+[project.optional-dependencies]
+
+#########################
+# Tool config
+#########################
+
+[tool.setuptools]
+
+[tool.black]
+line-length = 88
+target-version = [ 'py311']
+
+[tool.mypy]
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov --strict-markers"
+xfail_strict = true
+testpaths = [
+    "tests/",
+]
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 100
+
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests"]
+force_single_line = true
+lines_after_imports = 2
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
