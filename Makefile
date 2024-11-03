@@ -2,7 +2,7 @@
 first-commit: ## install requirement and commit
 	@echo "🚀 installing dependencies..."
 	@pip install pip-tools
-	@pip-compile -o requirements.txt pyproject.toml requirements/dev-requirements.in
+	@pip-compile --extra dev -o requirements.txt pyproject.toml
 	@pip-sync
 	@echo "🚀 editable install of project..."
 	@python -m pip install -e .
@@ -13,13 +13,13 @@ first-commit: ## install requirement and commit
 	@git add .
 	@git commit -m "first-commit"
 
-.PHONY: editable-install
-editable-install: ## Install package editable
+.PHONY: editable
+editable: ## Editable install of package
 	@python -m pip install -e .
 
-.PHONY: update-requirements
-update-requirements: ## Run code quality tools
-	@pip-compile -o requirements.txt pyproject.toml requirements/dev-requirements.in
+.PHONY: update-deps
+update-deps: ## update alle extra dependencies
+	@pip-compile --extra dev -o requirements.txt pyproject.toml
 	@pip-sync
 	@python -m pip install -e .
 

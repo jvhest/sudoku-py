@@ -28,6 +28,19 @@ sudoku = "sudoku.sudoku:main"
 get-sudoku = "sudoku.get_sudoku:main"
 
 [project.optional-dependencies]
+dev = [
+  "ipython",
+  "pytest",
+  "pytest-cov",
+  "coverage",
+  "black",
+  "flake8",
+  "isort",
+  "mypy",
+  "pre-commit",
+  "pre-commit-hooks",
+  "pyupgrade",
+]
 
 #########################
 # Tool config
